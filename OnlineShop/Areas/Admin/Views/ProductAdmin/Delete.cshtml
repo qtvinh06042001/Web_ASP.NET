@@ -1,0 +1,92 @@
+﻿@model OnlineShop.Context.Product
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/SharedAdmin/_Layout.cshtml";
+}
+
+
+
+
+
+<div class="modal-header bg-success">
+    <h3 class="modal-title" id="planCreateModalTitle">Xóa sản phẩm @Model.Name</h3>
+</div>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input type="hidden" asp-for="Id" />
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label input-required">Tên sản phẩm</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="@Model.Name" disabled />
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label input-required">Ảnh</label>
+                <div class="col-sm-8">
+                    @{
+                        string ImagePath = "~/Content/images/" + Model.Avatar;
+                    }
+                    <img src="@Url.Content(ImagePath)" width="300" class="img-thumbnail" />
+                </div>
+            </div>
+
+        </div>
+        <!--./col-->
+        <!-- Col -->
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label input-required">Giá</label>
+                <div class="col-sm-8">
+                    @{
+                        string gia = "";
+                        int price = (int)Model.Price;
+                        gia = price.ToString("#,##0");
+                    }
+                    <input type="text" class="form-control" placeholder="@gia VND " disabled />
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label input-required">Danh mục</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="@Model.Category.Name" disabled />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label input-required">Mô tả ngắn</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="@Model.ShortDes" disabled />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label input-required">Mô tả chi tiết</label>
+                <div class="col-sm-8">
+                    @Html.Raw(Model.FullDescription)
+                </div>
+            </div>
+        </div>
+        <!--./col-->
+    </div>
+    <!--./row-->
+</div>
+
+
+
+
+
+
+@using (Html.BeginForm("Delete", "ProductAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-footer">
+        <input type="submit" value="Xóa" class="btn btn-danger" />
+        @Html.ActionLink("Trở lại danh sách", "Index")
+    </div>
+}
+

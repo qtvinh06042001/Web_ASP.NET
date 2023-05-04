@@ -1,0 +1,57 @@
+﻿@model OnlineShop.Context.Order
+
+@{
+    ViewBag.Title = "Delete";
+}
+<h2>Bạn muốn xóa đơn hàng này?</h2>
+<div>
+    <div id="dataTables_wrapper" class="dataTables_wrapper">
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th>
+                        <p>Tên</p>
+                    </th>
+                    <th>
+                        <p>Thời gian đặt</p>
+                    </th>
+                    <th>
+                        <p>SDT</p>
+                    </th>
+                    <th>
+                        <p>Địa chỉ</p>
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                    <td>
+                        @Model.Name
+                    </td>
+                    <td>
+                        @Model.CreateOnUtc
+                    </td>
+                    <td>
+                        @Model.Phone
+                    </td>
+                    <td>
+                        @Model.Adress
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-footer">
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+            @Html.ActionLink("Trở lại danh sách", "Index")
+        </div>
+    }
+</div>

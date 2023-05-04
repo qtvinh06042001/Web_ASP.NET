@@ -1,0 +1,73 @@
+﻿@model OnlineShop.Areas.Order_OrderDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Đơn hàng của @Model.objOrder.Name đặt lúc @Model.objOrder.CreateOnUtc</h2>
+
+<br />
+@{ int all = 0;
+    }
+
+<table class="table">
+    <tr>
+        
+        <th>
+            <p>Tên sản phẩm</p>
+        </th>
+        <th>
+            <p>Số lượng</p>
+        </th>
+        <th>
+            <p>Giá sản phẩm</p>
+        </th>
+        <th>
+            <p>Thành tiền</p>
+        </th>
+    </tr>
+
+@foreach (var item in Model.lstOrderDetail) {
+    <tr>
+        
+        <td>
+            @item.ProductName
+        </td>
+        <td>
+            @item.Quantity
+        </td>
+        <td>
+            @{ 
+                string tien = "";
+                int gia = (int)item.Price;
+                tien = gia.ToString("#,##0");
+            }
+            @tien
+        </td>
+        <td>
+            @{ 
+                int tong = (int)(item.Price * item.Quantity);
+                string tt = "";
+                tt = tong.ToString("#,##0");
+                all = all + tong;
+            }
+            @tt
+        </td>
+        
+    </tr>
+
+}
+    <tr>
+        <td></td>
+        <td></td>
+        <td width="200">
+            Thành tiền: 
+        </td>
+        <td width="200" style="color:orangered">
+            @{ 
+                string abc = all.ToString("#,##0");
+            }
+            @abc
+        </td>
+    </tr>
+</table>

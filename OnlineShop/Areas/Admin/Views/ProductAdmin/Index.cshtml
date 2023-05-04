@@ -1,0 +1,132 @@
+﻿@using PagedList;
+@using OnlineShop.Areas.Admin.Controllers;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<OnlineShop.Context.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/SharedAdmin/_Layout.cshtml";
+}
+<style>
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+    }
+        /* set the style for the active class */
+        .pagination a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+        /* add background color when user hovers on inactive class */
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+</style>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Danh sách sản phẩm </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-control col-sm-12 col-md-6">
+                        <div class="input-group">
+                            @using (Html.BeginForm())
+                            {
+                                <p>
+                                    Tìm sản phẩm: @Html.TextBox("SearchString")
+                                    <input type="submit" value="Tìm" placeholder="Nhập tên sản phẩm" />
+                                </p>
+                            }
+                        </div>
+                    </div>
+                    <div class="table-control col-sm-12 col-md-6 text-right">
+                        <a class="btn btn-success quickUpdate" href="~/Admin/ProductAdmin/Create">
+                            <i class="fas fa-fw fa-plus"></i><span>Thêm mới</span>
+                        </a>
+                        <a class="btn exportByByte">
+                            @using (Html.BeginForm("Export", "ProductAdmin", FormMethod.Post))
+                            {
+                                <input type="submit" value="Xuất file">
+                            }
+                        </a>
+                    </div>
+                </div>
+
+                <div id="dataTables_wrapper" class="dataTables_wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    Tên
+                                </th>
+                                <th>
+                                    Ảnh
+                                </th>
+                                <th>
+                                    Danh mục
+                                </th>
+                                <th>
+                                    Giá
+                                </th>
+                                <th>
+                                    Thao tác
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @{
+                                        string ImagePath = "~/Content/images/" + item.Avatar;
+                                    }
+                                    <img src="@Url.Content(ImagePath)" width="100" height="100" class="img-thumbnail" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelitem => item.Category.Name)
+                                </td>
+                                <td>
+                                    @{
+                                        string tien = "";
+                                        int gia = (int)item.Price;
+                                        tien = gia.ToString("#,##0");
+                                    }
+                                    @tien
+                                </td>
+
+                                <td>
+                                    <a title="Xem chi tiết" class="btn btn-sm btn-outline-secondary btn-hover-success quickUpdate" href="~/Admin/ProductAdmin/Details/@item.Id">
+                                        <i class="fas fa-fw fa-info"></i>
+                                    </a>
+                                    <a title="Sửa" class="btn btn-sm btn-outline-secondary btn-hover-info quickUpdate" href="~/Admin/ProductAdmin/Edit/@item.Id">
+                                        <i class="fas fa-fw fa-edit"></i>
+                                    </a>
+                                    <a title="Xóa" class="btn btn-sm btn-outline-secondary btn-hover-danger quickDelete" href="~/Admin/ProductAdmin/Delete/@item.Id">
+                                        <i class="fas fa-fw fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div>
+                        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

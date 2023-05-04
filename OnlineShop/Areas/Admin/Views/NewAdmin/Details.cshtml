@@ -1,0 +1,64 @@
+﻿@model OnlineShop.Context.News
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/SharedAdmin/_Layout.cshtml";
+}
+
+<form class="modal-content validateForm bv-form onUpdateInputState" form asp-action="Details">
+    <div class="modal-header bg-success">
+        <h3 class="modal-title" id="planCreateModalTitle">Thông tin tin tức</h3>
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="modal-body">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label input-required">Ảnh</label>
+                    <div class="col-sm-8">
+                        @{
+                            string ImagePath = "~/Content/images/" + Model.Avatar;
+                        }
+                        <img src="@Url.Content(ImagePath)" width="300" class="img-thumbnail" />
+                    </div>
+                </div>
+
+            </div>
+            <!--./col-->
+            <!-- Col -->
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label input-required">Tên tin tức</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="@Model.Name" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label input-required">Mô tả ngắn</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" placeholder="@Model.ShortDes" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label input-required">Mô tả chi tiết</label>
+                    <div class="col-sm-8">
+                        @Html.Raw(Model.FullDescription)
+                    </div>
+                </div>
+            </div>
+            <!--./col-->
+        </div>
+        <!--./row-->
+    </div>
+    <div>
+
+    </div>
+    <div class="modal-footer">
+
+        @Html.ActionLink("Trở lại danh sách", "Index")
+        <a class="btn btn-outline-info quickUpdate" href="~/Admin/NewAdmin/Edit/@Model.Id">Sửa</a>
+
+    </div>
+</form>

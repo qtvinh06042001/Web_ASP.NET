@@ -1,0 +1,38 @@
+﻿@model OnlineShop.Context.Users
+@{
+    ViewBag.Title = "Infor";
+}
+
+
+<div class="main">
+    <div class="content">
+        <div class="section group">
+            <div class="col span_2_of_3">
+                <div class="contact-form">
+                    <h2>Thông tin người dùng</h2>
+                    @using (Html.BeginForm())
+                    {
+                        <div>
+                            <span><label>Họ</label></span>
+                            <span><input required type="text" name="firstName" class="form-control" placeholder="@Model.FirstName"></span>
+                        </div>
+                        <div>
+                            <span><label>Tên</label></span>
+                            <span><input required type="text" name="lastName" class="form-control" placeholder="@Model.LastName"></span>
+                        </div>
+                        <div>
+                            <span><label>Tên đăng nhập (Email)</label></span>
+                            <span><input required type="text" name="Email" class="form-control" placeholder="@Model.Email" readonly></span>
+                        </div>
+                        <div>
+                            <span><input type="submit" value="Lưu" class="btn"></span>
+                            <span><a href="~/Home/Index"><input type="button" value="Trở lại trang chủ" class="btn" /></a></span>
+                        </div>
+                        <span style="color:red"><b>@ViewBag.error</b></span>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
