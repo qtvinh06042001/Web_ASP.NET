@@ -16,8 +16,54 @@ namespace OnlineShop.Areas.Admin.Controllers
     {
         // GET: Admin/ProductAdmin
         ShopEntities1 db = new ShopEntities1();
-        
-        
+
+        #region Export
+        [HttpPost]
+        public ActionResult Export()
+        {
+            var gv = new GridView();
+            gv.DataSource = this.db.Product.Select(n => new
+            {
+                Name = n.Name,
+                Price = n.Price,
+            }).OrderByDescending(p => p.Name).ToList();
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            //Response.AddHeader("content-disposition",
+            // "attachment;filename=GridViewExport.xls");
+            Response.Charset = "utf-8";
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment;filename=Danh Sách Sản Phẩm.xls");
+            //Mã hóa chữa sang UTF8
+            Response.ContentEncoding = System.Text.Encoding.UTF8;
+            Response.BinaryWrite(System.Text.Encoding.UTF8.GetPreamble());
+
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+
+            for (int i = 0; i < gv.Rows.Count; i++)
+            {
+                //Apply text style to each Row
+                gv.Rows[i].Attributes.Add("class", "textmode");
+            }
+            //Add màu nền cho header của file excel
+            gv.HeaderRow.BackColor = System.Drawing.Color.DarkBlue;
+            //Màu chữ cho header của file excel
+            gv.HeaderStyle.ForeColor = System.Drawing.Color.White;
+
+            gv.HeaderRow.Cells[0].Text = "Tên";
+            gv.HeaderRow.Cells[1].Text = "Giá";
+            gv.RenderControl(hw);
+
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+            var model = db.Product.OrderByDescending(p => p.Name)
+                .ToList();
+            return View("View", model);
+        }
+        #endregion
 
         #region Get
 
