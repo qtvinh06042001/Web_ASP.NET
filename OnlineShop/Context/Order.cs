@@ -22,14 +22,16 @@ namespace OnlineShop.Context
         }
     
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Bạn phải nhập tên")]
         public string Name { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<System.DateTime> CreateOnUtc { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Bạn phải nhập số điện thoại")]
+        [MaxLength(11,ErrorMessage ="Số điện thoại không được quá 11 số")]
+        [MinLength(9,ErrorMessage ="Số điện thoại không được ít hơn 9 số")]
         public string Phone { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Bạn phải nhập địa chỉ")]
         public string Adress { get; set; }
     
         public virtual Users Users { get; set; }

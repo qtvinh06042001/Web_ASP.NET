@@ -61,6 +61,7 @@
                 success: function () {
                     $("#CartCount").text(@Session["count"] - 1);
                     $("#product-" + model.Id).remove();
+                    window.location.href = "/Cart/Index";
                 },
                 error: function () {
                     alert("Xóa sản phẩm không thành công")

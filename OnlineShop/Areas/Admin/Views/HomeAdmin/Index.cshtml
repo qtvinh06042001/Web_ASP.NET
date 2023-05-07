@@ -2,7 +2,154 @@
 @{
     ViewBag.Title = "Index";
 }
-<h2>Trang Quản Trị</h2>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery -->
+<script src="~/Content/Admin/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/Content/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="~/Content/Admin/plugins/chart.js/Chart.min.js"></script>
+<style>
+    .card-title {
+        float: left;
+        font-size: 20px !important;
+        font-weight: 400;
+        margin: 0;
+    }
+</style>
+<div class="wrapper">
+    <!-- Main Sidebar Container -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-info elevation-1"><i class="glyphicon glyphicon-tasks"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Sản phẩm</span>
+                            <span class="info-box-number">@ViewBag.Product</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="glyphicon glyphicon-user"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Khách hàng</span>
+                            <span class="info-box-number">@ViewBag.User</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <!-- fix for small devices only -->
+                <div class="clearfix hidden-md-up"></div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="glyphicon glyphicon-shopping-cart"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Đơn hàng</span>
+                            <span class="info-box-number">@ViewBag.Cart</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="glyphicon glyphicon-envelope"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Phản hồi</span>
+                            <span class="info-box-number">@ViewBag.Res</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- DONUT CHART -->
+                    <div class="card card-danger">
+                        <div class="card-header">
+                            <h2 class="card-title">Sản phẩm theo các phòng</h2>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="donutChart" style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%;"></canvas>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col (LEFT) -->
+                <!-- /.col (RIGHT) -->
+            </div>
+            <!-- /.row -->
+        </div>
+    </section>
+</div>
+<script>
+    $(function () {
+        //-------------
+        //- DONUT CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+        var donutData = {
+            labels: [
+                'Ăn-Bếp',
+                'Tắm',
+                'Khách',
+                'Ngủ',
+            ],
+            datasets: [
+                {
+                    data: [@ViewBag.An, @ViewBag.Tam, @ViewBag.Khach, @ViewBag.Ngu],
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef'],
+                }
+            ]
+        }
+        var donutOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        new Chart(donutChartCanvas, {
+            type: 'doughnut',
+            data: donutData,
+            options: donutOptions
+        })
 
 
 
+        new Chart(stackedBarChartCanvas, {
+            type: 'bar',
+            data: stackedBarChartData,
+            options: stackedBarChartOptions
+        })
+    })
+</script>

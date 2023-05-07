@@ -23,7 +23,8 @@ namespace OnlineShop.Context
         }
     
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Bạn phải nhập tên danh mục")]
+        [MaxLength(50, ErrorMessage ="Tên danh mục không được quá 50 kí tự")]
         public string Name { get; set; }
         public string Avatar { get; set; }
     

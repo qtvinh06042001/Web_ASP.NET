@@ -2539,6 +2539,7 @@
     <Content Include="Content\images\gia-treo.jpg" />
     <Content Include="Content\images\guong.jpg" />
     <Content Include="Content\images\home.png" />
+    <Content Include="Content\images\icon success.png" />
     <Content Include="Content\images\ke-bep.jpg" />
     <Content Include="Content\images\ke-nha-tam.jpg" />
     <Content Include="Content\images\linkedin.png" />
