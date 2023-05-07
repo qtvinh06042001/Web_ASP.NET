@@ -16,13 +16,14 @@ namespace OnlineShop.Context
     public partial class Response
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Không được để trông tên phản hồi")]
+        [MaxLength(50,ErrorMessage ="Tên không được quá 50 kí tự")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Vui lòng nhập email của bạn")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Vui lòng nhập tên công ty")]
         public string CompanyName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Nội dung phản hồi không được để trống")]
         public string Subject { get; set; }
     }
 }

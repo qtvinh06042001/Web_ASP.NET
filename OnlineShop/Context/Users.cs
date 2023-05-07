@@ -22,12 +22,13 @@ namespace OnlineShop.Context
         }
     
         public int idUser { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Tên không được để trống")]
+        [MaxLength(50,ErrorMessage ="Tên không quá 50 kí tự")]
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Email không được để trống")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Mật khẩu không được để trống")]
         public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

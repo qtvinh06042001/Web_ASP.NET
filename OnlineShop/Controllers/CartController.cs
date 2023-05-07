@@ -5,6 +5,7 @@ using OnlineShop.Payment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -87,6 +88,7 @@ namespace OnlineShop.Controllers
         [HttpPost]
         public ActionResult Payment(string Name, string Phone, string Address)
         {
+            int intOrderId;
             int tong = 0;
             if (Session["idUser"] == null)
             {
@@ -104,7 +106,7 @@ namespace OnlineShop.Controllers
                 objOrder.Status = 1;
                 db.Order.Add(objOrder);
                 db.SaveChanges();
-                int intOrderId = objOrder.Id;
+                intOrderId = objOrder.Id;
                 List<OrderDetail> lstOrderDetail = new List<OrderDetail>();
                 foreach (var item in lstCart)
                 {
@@ -176,6 +178,7 @@ namespace OnlineShop.Controllers
                 Session["count"] = 0;
                 return Redirect(jmessage.GetValue("payUrl").ToString());
             }
+            
         }
 
         #endregion
@@ -189,6 +192,7 @@ namespace OnlineShop.Controllers
         [HttpPost]
         public ActionResult PaymentCOD(string Name, string Phone, string Address)
         {
+            int intOrderId;
             int tong = 0;
             if (Session["idUser"] == null)
             {
@@ -206,7 +210,7 @@ namespace OnlineShop.Controllers
                 objOrder.Status = 0;
                 db.Order.Add(objOrder);
                 db.SaveChanges();
-                int intOrderId = objOrder.Id;
+                intOrderId = objOrder.Id;
                 List<OrderDetail> lstOrderDetail = new List<OrderDetail>();
                 foreach (var item in lstCart)
                 {
@@ -233,6 +237,7 @@ namespace OnlineShop.Controllers
 
         public ActionResult Success()
         {
+            
             return View();
         }
     }

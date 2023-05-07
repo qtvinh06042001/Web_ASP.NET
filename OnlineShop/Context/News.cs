@@ -17,11 +17,12 @@ namespace OnlineShop.Context
     public partial class News
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Bạn phải nhập tên tin tức")]
+        [MaxLength(500, ErrorMessage = "Tên danh mục không được quá 500 kí tự")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Bạn phải nhập mô tả ngắn")]
         public string ShortDes { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Bạn phải nhập mô tả chi tiết")]
         public string FullDescription { get; set; }
         public string Avatar { get; set; }
         [NotMapped]
