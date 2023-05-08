@@ -183,23 +183,20 @@ namespace OnlineShop.Areas.Admin.Controllers
         {
             if (sp.ImageUpload != null)
             {
-                if (sp.Avatar != null)
-                {
-                    string fileName = Path.GetFileNameWithoutExtension(sp.ImageUpload.FileName);
-                    string extention = Path.GetExtension(sp.ImageUpload.FileName);
-                    fileName = fileName + extention;
-                    sp.Avatar = fileName;
-                    sp.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/"), fileName));
-                }
-                else
-                {
 
-                        sp.Avatar = form["oldimage"];
-                   
-                }
-                db.Entry(sp).State = EntityState.Modified;
-                db.SaveChanges();
+                string fileName = Path.GetFileNameWithoutExtension(sp.ImageUpload.FileName);
+                string extention = Path.GetExtension(sp.ImageUpload.FileName);
+                fileName = fileName + extention;
+                sp.Avatar = fileName;
+                sp.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/"), fileName));
             }
+            else
+            {
+
+                sp.Avatar = form["oldimage"];
+            }
+            db.Entry(sp).State = EntityState.Modified;
+            db.SaveChanges();
             ViewBag.CategoryID = new SelectList(db.Category, "ID", "Name", sp.CategoryId);
             return RedirectToAction("Index");
             
