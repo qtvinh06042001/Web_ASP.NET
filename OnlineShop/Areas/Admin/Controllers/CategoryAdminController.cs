@@ -83,8 +83,6 @@ namespace OnlineShop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(Category objCategory, FormCollection form)
         {
-            if (objCategory.ImageUpload != null)
-            {
                 if (objCategory.Avatar != null)
                 {
                     string fileName = Path.GetFileNameWithoutExtension(objCategory.ImageUpload.FileName);
@@ -97,9 +95,9 @@ namespace OnlineShop.Areas.Admin.Controllers
                 {
                     objCategory.Avatar = form["oldimage"];
                 }
-                dbObj.Entry(objCategory).State = EntityState.Modified;
-                dbObj.SaveChanges();
-            }
+            dbObj.Entry(objCategory).State = EntityState.Modified;
+            dbObj.SaveChanges();
+            
             return RedirectToAction("Index");
             
         }
