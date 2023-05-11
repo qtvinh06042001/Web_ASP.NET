@@ -70,13 +70,25 @@ namespace OnlineShop.Controllers
             }
             return -1;
         }
-        public ActionResult Remove(int Id)
+        public RedirectToRouteResult Remove(int ProductId)
         {
             List<Cart> li = (List<Cart>)Session["cart"];
-            li.RemoveAll(n => n.Product.Id == Id);
+            li.RemoveAll(n => n.Product.Id == ProductId);
             Session["cart"] = li;
             Session["count"] = Convert.ToInt32(Session["count"]) - 1;
-            return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
+            return RedirectToAction("Index");
+        }
+        public RedirectToRouteResult UpdateAmount(int ProductId, int newAmount)
+        {
+            // tìm carditem muon sua
+            List<Cart> li = (List<Cart>)Session["cart"];
+            Cart EditAmount = li.FirstOrDefault(m => m.Product.Id == ProductId);
+            if (EditAmount != null)
+            {
+                EditAmount.Quantity = newAmount;
+            }
+            return RedirectToAction("Index");
+
         }
 
         #region PaymentMoMo
