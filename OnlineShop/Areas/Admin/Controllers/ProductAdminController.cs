@@ -97,7 +97,7 @@ namespace OnlineShop.Areas.Admin.Controllers
                     sp = db.Product.Include(b=>b.Category).ToList();
                 }
                 ViewBag.CurrentFilter = SearchString;
-                int pageSize = 3;
+                int pageSize = 4;
                 int pageNumber = (page ?? 1);
                 sp = sp.OrderByDescending(n => n.Id).ToList();
                 return View(sp.ToPagedList(pageNumber, pageSize));
