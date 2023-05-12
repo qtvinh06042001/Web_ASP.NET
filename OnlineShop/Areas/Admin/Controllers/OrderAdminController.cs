@@ -44,6 +44,11 @@ namespace OnlineShop.Areas.Admin.Controllers
         public ActionResult Delete(Order order)
         {
             var cus = db.Order.Where(n => n.Id == order.Id).FirstOrDefault();
+            var objod = db.OrderDetail.Where(n => n.OrderId == cus.Id).ToList();
+            foreach(var item in objod)
+            {
+                db.OrderDetail.Remove(item);
+            }
             db.Order.Remove(cus);
             db.SaveChanges();
             return RedirectToAction("Index");

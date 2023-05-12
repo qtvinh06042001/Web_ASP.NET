@@ -92,7 +92,7 @@
                                     @{
                                         string ImagePath = "~/Content/images/" + item.Avatar;
                                     }
-                                    <img src="@Url.Content(ImagePath)" width="100" height="100" class="img-thumbnail" />
+                                    <img style="max-height:70px" src="@Url.Content(ImagePath)" class="img-thumbnail" />
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelitem => item.Category.Name)
